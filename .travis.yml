@@ -12,6 +12,7 @@ install:
 script:
   - cd reporter
   - npm install --ignore-scripts
+  - npm run postinstall
   - npm test
 after_success:
   - bash <(curl -s https://codecov.io/bash)

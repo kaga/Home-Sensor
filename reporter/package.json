@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build",
-    "build": "typings install && tsc",
-    "build-watch": "typings install && tsc -w",
+    "postinstall": "typings install && npm run build",
+    "build": "tsc",
+    "build-watch": "tsc -w",
     "start": "node build/index.js",
     "test": "npm run build && istanbul cover ./node_modules/mocha/bin/_mocha build/**/*.unit.js --report lcovonly -- -R spec"
   },
