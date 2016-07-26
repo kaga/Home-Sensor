@@ -10,7 +10,7 @@ install:
   - npm install -g typescript
 script:
   - cd reporter
-  - npm install
+  - npm install --ignore-scripts
   - npm test
 after_script:
   - bash <(curl -s https://codecov.io/bash)
