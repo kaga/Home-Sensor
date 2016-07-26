@@ -1,0 +1,29 @@
+{
+  "name": "sensorapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "install": "typings install && tsc",
+    "start": "node build/index.js",
+    "test": "tsc && mocha build/**/*.unit.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cradle": "^0.7.1",
+    "express": "^4.13.4",
+    "lodash": "^4.14.0",
+    "moment": "^2.14.1",
+    "nconf": "^0.8.4",
+    "sendevent": "^1.0.4",
+    "superagent": "^2.1.0",
+    "when": "^3.7.7"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.2",
+    "sinon": "^1.17.4",
+    "typescript": "^1.8.10"
+  }
+}

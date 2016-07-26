@@ -1,0 +1,8 @@
+{
+    "couchdb_host": "http://localhost:5984",
+    "couchdb_database_name": "livingroom_temp_humi",
+    "couchdb_design_name": "livingroom_humidity",
+    "couchdb_temperature_view_name": "temperature",
+    "couchdb_humidity_view_name": "humidity",
+    "api_port": 3001
+}
