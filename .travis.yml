@@ -13,4 +13,4 @@ script:
   - cd reporter
   - npm install --ignore-scripts
   - npm test
-  - codecov
+  - codecov < coverage/coverage.json
