@@ -5,6 +5,8 @@ sudo: false
 notifications:
   email:
     on_success: never
+install:
+  - npm install -g typings
 before_script: 
   - cd api
   - npm install
