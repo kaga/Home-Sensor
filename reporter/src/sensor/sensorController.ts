@@ -57,11 +57,11 @@ export class SensorController {
 export function createSensorByName(sensorname: string): When.Promise<SensorSource> {
     var supportedSensor = {
         "htu21d": () => {
-            var Sensor = require('./Htu21dSensor').Sensor
+            var Sensor = require('./htu21dSensor').Sensor
             return new Sensor();     
         },
         "mock": () => {
-            var Sensor = require('./MockSensor').Sensor;
+            var Sensor = require('./mockSensor').Sensor;
             return new Sensor();
         }
     }
