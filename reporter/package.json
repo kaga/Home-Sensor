@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "typings install && npm run build",
-    "build": "tsc",
-    "build-watch": "tsc -w",
+    "postinstall": "npm run build",
+    "build": "typings install && tsc",
+    "build-watch": "typings install && tsc -w",
     "start": "node build/index.js",
     "test": "npm run build && mocha build/**/*.unit.js"
   },

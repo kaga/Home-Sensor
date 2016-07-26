@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "install": "typings install && npm run build",
+    "postinstall": "typings install && npm run build",
     "build": "tsc",
     "build-watch": "tsc -w",
     "start": "node build/index.js",
