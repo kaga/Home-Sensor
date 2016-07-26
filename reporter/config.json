@@ -1,0 +1,6 @@
+{
+    "report_api": false,
+    "report_interval_seconds": 1,
+    "sensor_source": "mock",
+    "tag": "unknown"
+}
