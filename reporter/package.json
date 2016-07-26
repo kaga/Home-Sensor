@@ -8,7 +8,7 @@
     "build": "typings install && tsc",
     "build-watch": "typings install && tsc -w",
     "start": "node build/index.js",
-    "test": "npm run build && mocha build/**/*.unit.js"
+    "test": "npm run build && istanbul cover ./node_modules/mocha/bin/_mocha build/**/*.unit.js --report lcovonly -- -R spec"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
     "mocha": "^2.5.2",
     "sinon": "^1.17.4",
     "typescript": "^1.8.10",

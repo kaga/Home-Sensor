@@ -8,9 +8,11 @@ notifications:
 install:
   - npm install -g typings
   - npm install -g typescript
+  - npm install -g codecov
 script:
   - cd reporter
   - npm install --ignore-scripts
   - npm test
+  - codecov 
 after_script:
   - bash <(curl -s https://codecov.io/bash)
