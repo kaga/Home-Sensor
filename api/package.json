@@ -2,11 +2,13 @@
   "name": "sensorapi",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
-    "install": "typings install && tsc",
+    "install": "typings install && npm run build",
+    "build": "tsc",
+    "build-watch": "tsc -w",
     "start": "node build/index.js",
-    "test": "tsc && mocha build/**/*.unit.js"
+    "test": "npm run build && mocha build/**/*.unit.js"
   },
   "author": "",
   "license": "ISC",

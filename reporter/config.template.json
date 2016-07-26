@@ -1,0 +1,8 @@
+{
+    "report_api": false,
+    "report_api_post": "/v1/sensor",
+    "report_api_host": "http://localhost",
+    "report_interval_seconds": 60,
+    "sensor_source": "htu21d",
+    "tag": "unknown"
+}
