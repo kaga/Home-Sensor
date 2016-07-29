@@ -1,7 +1,9 @@
 {
   "name": "garagepi",
   "dependencies": {
-    "lodash": "registry:npm/lodash#4.0.0+20160416211519",
+    "lodash": "registry:npm/lodash#4.0.0+20160723033700",
+    "node-uuid": "registry:npm/node-uuid#1.4.7+20160723033700",
+    "request": "registry:npm/request#2.69.0+20160428223725",
     "sinon": "registry:npm/sinon#1.16.0+20160427193336"
   },
   "globalDependencies": {
@@ -14,6 +16,7 @@
     "nconf": "registry:dt/nconf#0.0.0+20160724073144",
     "node": "registry:dt/node#6.0.0+20160523035754",
     "serve-static": "registry:dt/serve-static#0.0.0+20160501131543",
+    "uuid": "registry:dt/uuid#3.3.0+20160728152600",
     "when": "registry:dt/when#2.4.0+20160317120654"
   }
 }

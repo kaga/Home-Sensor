@@ -4,7 +4,7 @@ import _ = require('lodash');
 interface Configuration {
     reportApi?: {
         host: string;
-        port: string;
+        path: string;
     };
     sensor: {
         reportInterval: number,
@@ -22,7 +22,7 @@ export function loadConfiguration(): Configuration {
     nconf.defaults({
         'report_api': false,
         'report_api_host': 'http://localhost',
-        'report_api_post': '/v1/sensor',
+        'report_api_path': '/v1/sensor',
         'report_interval_seconds': 60,
         'sensor_source': 'htu21d', //'htu21d' or 'mock'
         'tag': 'unknown'        
@@ -35,13 +35,13 @@ export function loadConfiguration(): Configuration {
             source: nconf.get('sensor_source')
         }
     };
-    var host = nconf.get('couchdb_host');
-    var port = nconf.get('couchdb_port');
+    var host = nconf.get('report_api_host');
+    var path = nconf.get('report_api_path');
 
-    if (nconf.get('report_api') === true && _.isString(host) && _.isString(port)) {
+    if (nconf.get('report_api') === true && _.isString(host) && _.isString(path)) {
         config.reportApi = {
             host: host,
-            port: port
+            path: path
         };
     }
     return config;

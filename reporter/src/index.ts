@@ -1,9 +1,14 @@
-//import uuid = require('uuid');
+import uuid = require('node-uuid');
+import request = require('request');
+import _ = require('lodash');
+import { IncomingMessage } from 'http';
+
 import { loadConfiguration } from './configurationManager';
-import { SensorController, createSensorByName } from './sensor/sensorController';
+import { SensorController, createSensorByName, SensorData } from './sensor/sensorController';
 
 var config = loadConfiguration();
 
+console.info('configuration: ' + JSON.stringify(config, null, 4));
 //_.isObject(config.reportApi)
 
 createSensorByName(config.sensor.source)
@@ -12,22 +17,31 @@ createSensorByName(config.sensor.source)
         controller.startReadingSensor();
     });
 
-function onReceivedData(data) {
+function onReceivedData(data: SensorData) {
     console.log(data);
-}
 
-function uploadRoomdata(tempurature, humidity) {
-    /*try {
+    var reportApi = config.reportApi;
+    if (_.isObject(reportApi)) {
+        var host = reportApi.host;
+        var path = reportApi.path;
+        
         request.put({
-            url: 'http://room1pi.local:5984/livingroom_temp_humi/' +  uuid.v4(),
+            url: host + path + '/' + uuid.v4(),
             json: {
-                temperatureInC: tempurature,
-                humidityPercentage: humidity,
-                timestamp: new Date().toISOString()
+                temperatureInC: data.temperatureInC,
+                humidityPercentage: data.humidityPercentage,
+                timestamp: data.timestamp.toISOString()
             }
-        })
-    } catch(error) {
-
-    }*/
+        }, function(error: any, response: IncomingMessage, body: any) {
+            if (error) {
+                console.error(error);
+            } 
+            if (body) {
+                console.log(body);
+            }
+        });
+    } else {
+        console.info('report to api is disabled');
+    }
 }
 
