@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "ignore": [],
+  "execMap": {    
+  },
+  "watch": [
+    "build/"
+  ]
+}

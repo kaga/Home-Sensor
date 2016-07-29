@@ -3,6 +3,8 @@ import _ = require('lodash');
 import moment = require('moment');
 import When = require('when');
 
+import { SensorGroupLevel } from './sensorGroupLevel';
+
 export interface SensorDatabaseConfiguration {
     host: string;
     port: number;
@@ -36,25 +38,34 @@ export class SensorDatabase {
         });
     }
 
-    saveSensorData = (data: SensorData) => {
-        //var db = this.getDatabase();
+    saveSensorData = (id: string, data: SensorData) => {
+        var db = this.getDatabase();
+        return When.promise<any>((resolve, reject) => {
+            db.save(id, data, (err, res) => {
+                if (res) {
+                    resolve(res);
+                } else {
+                    reject(err);
+                }
+            })
+        });
     }
 
-    getTemperatureHistory = () => {
-        return this.getHistory(this.configuration.tempuratureViewName);
+    getTemperatureHistory = (filterBy: SensorGroupLevel, limit: number) => {
+        return this.getHistory(filterBy, limit, this.configuration.tempuratureViewName);
     }
 
-    getHumidityHistory() {
-        return this.getHistory(this.configuration.humidityViewName);
+    getHumidityHistory = (filterBy: SensorGroupLevel, limit: number) => {
+        return this.getHistory(filterBy, limit, this.configuration.humidityViewName);
     }
 
-    private getHistory = (viewName) => {
+    private getHistory = (filterBy: SensorGroupLevel, limit: number, viewName: string) => {
         var db = this.getDatabase();
         var viewPath = this.configuration.designName + '/' + viewName;
         var options = {
             group: true,
-            group_level: 4,
-            limit: 24,
+            group_level: filterBy,
+            limit: limit,
             descending: true
         }
 

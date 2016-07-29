@@ -8,11 +8,13 @@
     "build": "tsc",
     "build-watch": "tsc -w",
     "start": "node build/index.js",
-    "test": "npm run build && mocha build/**/*.unit.js"
+    "test": "npm run build && mocha build/**/*.unit.js",
+    "clean": "rm -rf node_modules/ && rm -rf build/"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "cradle": "^0.7.1",
     "express": "^4.13.4",
     "lodash": "^4.14.0",
