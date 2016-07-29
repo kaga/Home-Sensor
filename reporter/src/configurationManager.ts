@@ -38,7 +38,7 @@ export function loadConfiguration(): Configuration {
     var host = nconf.get('report_api_host');
     var path = nconf.get('report_api_path');
 
-    if (nconf.get('report_api') === true && _.isString(host) && _.isString(path)) {
+    if ((nconf.get('report_api') === "true" || nconf.get('report_api') === true) && _.isString(host) && _.isString(path)) {
         config.reportApi = {
             host: host,
             path: path

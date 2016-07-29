@@ -1,4 +1,6 @@
 #!/bin/bash
 
 npm run clean
-docker build -t homesensor/reporter .
+npm install
+npm run build
+docker build -t homesensor/reporter:latest .

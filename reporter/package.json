@@ -9,7 +9,7 @@
     "build-watch": "tsc -w",
     "start": "node build/index.js",
     "test": "npm run build && istanbul cover ./node_modules/mocha/bin/_mocha build/**/*.unit.js --report lcovonly -- -R spec",
-    "clean": "rm -rf node_modules/ && rm -rf build/"
+    "clean": "rm -rf build/"
   },
   "author": "",
   "license": "ISC",
