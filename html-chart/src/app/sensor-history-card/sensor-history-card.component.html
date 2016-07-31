@@ -1,0 +1,11 @@
+<md-card>
+  <md-card-content>
+    <canvas id="temperatureChart"></canvas>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="end center">
+    <button md-raised-button color="primary" (click)="onHistoryGroupByButtonDown('month')">month</button>
+    <button md-raised-button color="primary" (click)="onHistoryGroupByButtonDown('day')">day</button>
+    <button md-raised-button color="primary" (click)="onHistoryGroupByButtonDown('hour')">hour</button>
+    <button md-raised-button color="primary" (click)="onHistoryGroupByButtonDown('minute')">minute</button>
+  </md-card-actions>
+</md-card>
