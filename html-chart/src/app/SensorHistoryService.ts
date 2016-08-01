@@ -25,6 +25,10 @@ export class SensorHistoryService {
         let parameters = new URLSearchParams();
         parameters.append('filterBy', options.filterBy);
         parameters.append('limit', options.limit.toString());
+        let host = environment.apiHost;
+        if (!host) {
+            host = window.location.origin + ":3000"
+        }
         return this.http.get(environment.apiHost + '/v1/sensor/history/temperature', {        
             search: parameters
         }).toPromise()
