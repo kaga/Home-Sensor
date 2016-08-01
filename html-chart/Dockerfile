@@ -1,6 +1,6 @@
 FROM hypriot/rpi-busybox-httpd
 
-COPY ./dist /dist
+COPY ./dist /www
 
 EXPOSE 80
-CMD ["/dist"]
+
