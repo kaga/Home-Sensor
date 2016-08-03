@@ -1,6 +1,11 @@
 <md-card>
+  <md-card-title>
+    <md-card-title-text>
+      {{title}}
+    </md-card-title-text>
+  </md-card-title>
   <md-card-content>
-    <canvas id="temperatureChart"></canvas>
+    <canvas #sensorHistoryCanvas></canvas>
   </md-card-content>
   <md-card-actions layout="row" layout-align="end center">
     <button md-raised-button color="primary" (click)="onHistoryGroupByButtonDown('month')">month</button>

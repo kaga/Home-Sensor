@@ -1,10 +1,13 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { SensorHistoryService, SensorRecord, SensorHistoryRequestOption } from '../SensorHistoryService';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 import { MD_BUTTON_DIRECTIVES } from '@angular2-material/button';
 
+import * as moment from 'moment';
 import * as _ from 'lodash';
+import * as When from 'when';
 import * as Chart from 'chart.js';
+
 
 @Component({
     moduleId: module.id,
@@ -16,14 +19,21 @@ import * as Chart from 'chart.js';
 })
 
 export class SensorHistoryCardComponent implements OnInit {
+    @ViewChild('sensorHistoryCanvas') sensorHistoryCanvas: ElementRef;
     zone: NgZone;
     sensorHistorySetting: SensorHistoryRequestOption = {
         filterBy: 'hour',
         limit: 24
     };
+    title: string = '';
+    private chart: any;
 
     ngOnInit() {
         this.updateSensor();
+    }
+
+    ngAfterViewInit() {
+       
     }
 
     constructor(private sensorHistoryService: SensorHistoryService) {
@@ -36,28 +46,92 @@ export class SensorHistoryCardComponent implements OnInit {
     }
 
     updateSensor() {
-        this.sensorHistoryService.getTemperatureHistory(this.sensorHistorySetting)
-            .then((response) => {
+        When.all([
+            this.sensorHistoryService.getHumidityHistory(this.sensorHistorySetting),
+            this.sensorHistoryService.getTemperatureHistory(this.sensorHistorySetting)
+        ])
+            .spread((humidityHistroy, temperatureHistory) => {
                 this.zone.run(() => {
-                    this.updateChart('temperatureChart', 'temperature', response.data);
+                    this.updateChart('temperatureChart', 'temperature', humidityHistroy.data.reverse(), temperatureHistory.data.reverse());
                 });
+            })
+            .catch((error) => {
+                debugger;
             });
     }
 
-    updateChart(canvasClass, title, rows: [SensorRecord]) {
-        let labels = _.map(rows, function (row) {
-            return row.timestamp;
-        }).reverse();
-        let values = _.map(rows, function (row) {
-            return row['value'];
-        }).reverse();
-        let ctx: any = document.getElementById(canvasClass);
-        let myChart = new Chart(ctx, {
+    updateChart(canvasClass: string, titl: string, humidityHistroy: [SensorRecord], temperatureHistory: [SensorRecord]) {
+        let labels = _.map(humidityHistroy, (row) => moment(row.timestamp));
+        let context: any = this.sensorHistoryCanvas.nativeElement;
+        if (this.chart) {
+            this.chart.destroy();
+        }
+
+        this.chart = Chart.Line(context, {
             type: 'line',
             data: {
                 labels: labels,
-                datasets: [{
-                    label: title,
+                datasets: [
+                    this.createDataSet(SensorHistoryType.Humidity, humidityHistroy),
+                    this.createDataSet(SensorHistoryType.Temperature, temperatureHistory)
+                ]
+            },
+            options: {
+                tooltips: {
+                    enabled: true                    
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        ticks: {
+                            autoSkip: true,
+                            fontSize: 14,
+                            maxRotation: 45
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            autoSkip: true,
+                            beginAtZero: true,
+                            fontSize: 14,
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    createDataSet(sensorType: SensorHistoryType, sensorData: [SensorRecord]): any {
+        let values = _.map(sensorData, (row) => row.value.toPrecision(3));
+
+        let settings: any = {}
+        switch (sensorType) {
+            case SensorHistoryType.Humidity:
+                return {
+                    label: 'humidity',
+                    data: values,
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: '#03A9F4',
+                    borderColor: '#0288D1',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: '#0288D1',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: '#0288D1',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 3,
+                    pointHitRadius: 10,
+                    spanGaps: false,
+                }
+            case SensorHistoryType.Temperature:
+                return {
+                    label: 'temperature',
                     data: values,
                     fill: false,
                     lineTension: 0.1,
@@ -74,20 +148,18 @@ export class SensorHistoryCardComponent implements OnInit {
                     pointHoverBackgroundColor: 'rgba(75,192,192,1)',
                     pointHoverBorderColor: 'rgba(220,220,220,1)',
                     pointHoverBorderWidth: 2,
-                    pointRadius: 1,
+                    pointRadius: 3,
                     pointHitRadius: 10,
                     spanGaps: false,
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
                 }
-            }
-        });
+        }
+        return settings;
     }
 }
+
+enum SensorHistoryType {
+    Temperature = 0,
+    Humidity = 1
+}
+
+

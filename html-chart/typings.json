@@ -5,7 +5,8 @@
     "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654"
   },
   "globalDependencies": {
-    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504"
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+    "when": "registry:dt/when#2.4.0+20160317120654"
   },
   "dependencies": {
     "chart.js": "registry:npm/chart.js#2.1.4+20160615174920",

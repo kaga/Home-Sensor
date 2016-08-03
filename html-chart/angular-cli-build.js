@@ -17,8 +17,10 @@ module.exports = function(defaults) {
       'rxjs/**/*.+(js|js.map)',
       '@angular/**/*.+(js|js.map)',
       'lodash/lodash.min.js',
-      'chart.js/dist/Chart.min.js',
-      '@angular2-material/**/*'
+      'chart.js/dist/Chart.bundle.js',
+      '@angular2-material/**/*',
+      'when/dist/browser/when.min.+(js|js.map)',
+      'moment/min/moment.min.js'
     ]
   });
 };

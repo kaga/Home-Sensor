@@ -10,8 +10,10 @@
 /** Map relative paths to URLs. */
 const map: any = {
   '@angular2-material': 'vendor/@angular2-material',
-  'chart.js': 'vendor/chart.js/dist/Chart.min.js',
-  'lodash': 'vendor/lodash/lodash.min.js'
+  'chart.js': 'vendor/chart.js/dist/Chart.bundle.js',
+  'lodash': 'vendor/lodash/lodash.min.js',
+  'when': 'vendor/when/dist/browser/when.min.js',
+  'moment': 'vendor/moment/min/moment.min.js'
 };
 
 /** User packages configuration. */
