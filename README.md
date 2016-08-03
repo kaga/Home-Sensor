@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/kaga/Home-Sensor.svg?branch=master)](https://travis-ci.org/kaga/Home-Sensor)
 
+[![Coverage Status](https://coveralls.io/repos/github/kaga/Home-Sensor/badge.svg?branch=master)](https://coveralls.io/github/kaga/Home-Sensor?branch=master)
+
 # Home-Sensor 
 My home project that monitor temperature and humidity 
 

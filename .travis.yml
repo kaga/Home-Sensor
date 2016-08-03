@@ -5,23 +5,18 @@ sudo: false
 notifications:
   email:
     on_success: never
+env:
+  - TEST_DIR=reporter
+  - TEST_DIR=api
 install:
   - npm install -g typings
   - npm install -g typescript
   - npm install -g tslint
-  - npm install -g codecov
 script:
-  - cd reporter 
+  - cd $TEST_DIR 
   - npm install --ignore-scripts
   - npm run postinstall
   - npm run lint
-  - npm test
   - npm run test-travisci
-  - cd .. 
-  - cd api
-  - npm install 
-  - npm run postinstall
-  - npm run lint
-  - npm test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
