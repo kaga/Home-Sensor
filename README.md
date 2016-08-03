@@ -1,6 +1,8 @@
 # Home-Sensor
 My home project that monitor temperature and humidity 
 
+![HTML Chart](./images/html_chart_v1_0_1.png)
+
 ##User Story
 As a user, I want to know my home current temperature and humidity on my mobile phone.
 
@@ -26,5 +28,14 @@ It interacts with a CouchDB container for storing all the sensor information and
 ### CouchDB
 Store the sensor information 
  
-### Demo HTML
+### HTML Chart
 A HTML5 application which interface with the Sensor API
+
+##Note
+This project is still in it's early stages. I have a few things which I wanted to do as well.
+
+- Setup Travis CI for all modules
+- TSLint for all modules
+- API Documentation
+- Automatically setup new couchdb instance
+- Implement AppCache on the HTML ( it is 1.6MB in size on production build ) 
