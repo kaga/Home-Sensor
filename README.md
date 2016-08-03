@@ -1,4 +1,6 @@
-# Home-Sensor
+[![Build Status](https://travis-ci.org/kaga/Home-Sensor.svg?branch=master)](https://travis-ci.org/kaga/Home-Sensor)
+
+# Home-Sensor 
 My home project that monitor temperature and humidity 
 
 ![HTML Chart](./images/html_chart_v1_0_1.png)

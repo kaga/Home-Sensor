@@ -10,8 +10,13 @@ install:
   - npm install -g typescript
   - npm install -g codecov
 script:
-  - cd reporter
+  - cd reporter 
   - npm install --ignore-scripts
+  - npm run postinstall
+  - npm test
+  - cd .. 
+  - cd api
+  - npm install 
   - npm run postinstall
   - npm test
 after_success:
