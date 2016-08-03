@@ -6,7 +6,7 @@ export class Sensor implements SensorSource {
         return when.resolve({
             humidityPercentage: 50,
             temperatureInC: 23,
-            timestamp: new Date()      
+            timestamp: new Date()
         });
-    } 
+    }
 }

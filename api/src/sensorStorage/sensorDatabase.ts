@@ -1,5 +1,4 @@
 import cradle = require('cradle');
-import _ = require('lodash');
 import moment = require('moment');
 import When = require('when');
 
@@ -39,7 +38,7 @@ export class SensorDatabase {
     }
 
     saveSensorData = (id: string, data: SensorData) => {
-        var db = this.getDatabase();
+        const db = this.getDatabase();
         return When.promise<any>((resolve, reject) => {
             db.save(id, data, (err, res) => {
                 if (res) {
@@ -47,7 +46,7 @@ export class SensorDatabase {
                 } else {
                     reject(err);
                 }
-            })
+            });
         });
     }
 
@@ -60,19 +59,19 @@ export class SensorDatabase {
     }
 
     private getHistory = (filterBy: SensorGroupLevel, limit: number, viewName: string) => {
-        var db = this.getDatabase();
-        var viewPath = this.configuration.designName + '/' + viewName;
-        var options = {
+        const db = this.getDatabase();
+        const viewPath = this.configuration.designName + '/' + viewName;
+        const options = {
             group: true,
             group_level: filterBy,
             limit: limit,
             descending: true
-        }
+        };
 
         return When.promise<SensorHistoryData[]>((resolve, reject) => {
             db.view(viewPath, options, function (err, res) {
                 if (res) {
-                    var result: SensorHistoryData[] = [];
+                    const result: SensorHistoryData[] = [];
                     res.forEach((key, value) => {
                         let date = moment.utc(key);
                         result.push({
@@ -91,4 +90,4 @@ export class SensorDatabase {
     private getDatabase() {
         return this.connection.database(this.configuration.databaseName);
     }
-} 
+}

@@ -6,25 +6,23 @@ import { IncomingMessage } from 'http';
 import { loadConfiguration } from './configurationManager';
 import { SensorController, createSensorByName, SensorData } from './sensor/sensorController';
 
-var config = loadConfiguration();
-
-console.info('configuration: ' + JSON.stringify(config, null, 4));
-//_.isObject(config.reportApi)
+const config = loadConfiguration();
+console.info('configuration: ' + JSON.stringify(config, null, '\t'));
 
 createSensorByName(config.sensor.source)
     .tap((sensor) => {
-        var controller = new SensorController(config.sensor.reportInterval, config.sensor.tag, sensor, onReceivedData);
+        const controller = new SensorController(config.sensor.reportInterval, config.sensor.tag, sensor, onReceivedData);
         controller.startReadingSensor();
     });
 
 function onReceivedData(data: SensorData) {
     console.log(data);
 
-    var reportApi = config.reportApi;
+    const reportApi = config.reportApi;
     if (_.isObject(reportApi)) {
-        var host = reportApi.host;
-        var path = reportApi.path;
-        
+        const host = reportApi.host;
+        const path = reportApi.path;
+
         request.put({
             url: host + path + '/' + uuid.v4(),
             json: {
@@ -32,10 +30,10 @@ function onReceivedData(data: SensorData) {
                 humidityPercentage: data.humidityPercentage,
                 timestamp: data.timestamp.toISOString()
             }
-        }, function(error: any, response: IncomingMessage, body: any) {
+        }, function (error: any, response: IncomingMessage, body: any) {
             if (error) {
                 console.error(error);
-            } 
+            }
             if (body) {
                 console.log(body);
             }

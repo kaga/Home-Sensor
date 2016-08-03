@@ -33,11 +33,15 @@ Store the sensor information
 ### HTML Chart
 A HTML5 application which interface with the Sensor API
 
+###Development
+
+	$ npm install -g typescript tslint typings
+
 ##Note
 This project is still in it's early stages. I have a few things which I wanted to do as well.
 
 - Setup Travis CI for all modules
 - TSLint for all modules
-- API Documentation
+- Documentation
 - Automatically setup new couchdb instance
 - Implement AppCache on the HTML ( it is 1.6MB in size on production build ) 

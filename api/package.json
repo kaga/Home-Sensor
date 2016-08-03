@@ -7,6 +7,7 @@
     "postinstall": "typings install && npm run build",
     "build": "tsc",
     "build-watch": "tsc -w",
+    "lint": "tslint -c ../tslint.json --type-check --project tsconfig.json",
     "start": "node build/index.js",
     "test": "npm run build && mocha build/**/*.unit.js",
     "clean": "rm -rf build/"
