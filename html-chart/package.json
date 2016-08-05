@@ -1,6 +1,6 @@
 {
   "name": "html-chart",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -10,7 +10,11 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf dist/",
+    "build-production": "npm run clean && ng build -prod && npm run build-production-manifest && npm run build-production-html && npm run build-production-rename",
+    "build-production-manifest": "./node_modules/appcache-manifest/bin/appcache-manifest.js \"dist/*.{html,css,js}\" \"dist/app/**/*.{html,css,js}\" \"dist/vendor/es6-shim/*.js\" \"dist/vendor/reflect-metadata/*.js\" \"dist/vendor/systemjs/**/*.js\" \"dist/vendor/zone.js/dist/*.js\" -v --network-star -o dist/index.appcache",
+    "build-production-html": "./node_modules/appcache-manifest/bin/appcache-manifest-fixer.js dist/index.html -o dist/mobile.html",
+    "build-production-rename": "mv dist/index.html dist/_index.html && mv dist/mobile.html dist/index.html"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +41,7 @@
   },
   "devDependencies": {
     "angular-cli": "1.0.0-beta.10",
+    "appcache-manifest": "^1.0.4",
     "codelyzer": "0.0.20",
     "ember-cli-inject-live-reload": "1.4.0",
     "jasmine-core": "2.4.1",

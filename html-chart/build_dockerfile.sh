@@ -2,5 +2,5 @@
 
 npm run clean
 npm install
-ng build -prod
+npm run build-production
 docker build -t homesensor/html .
