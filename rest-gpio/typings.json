@@ -15,6 +15,7 @@
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "nconf": "registry:dt/nconf#0.0.0+20160724073144",
     "node": "registry:dt/node#6.0.0+20160523035754",
+    "onoff": "registry:dt/onoff#0.0.0+20160206144506",
     "serve-static": "registry:dt/serve-static#0.0.0+20160501131543",
     "uuid": "registry:dt/uuid#3.3.0+20160728152600",
     "when": "registry:dt/when#2.4.0+20160317120654"
