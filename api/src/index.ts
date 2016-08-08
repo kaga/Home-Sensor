@@ -30,14 +30,8 @@ app.get('/v1/sensor/history/temperature', function (request, response) {
     const limit = query.limit;
 
     storage.getTemperatureHistory(filterBy, limit)
-        .tap((data) => {
-            response.send({
-                data: data
-            });
-        })
-        .catch((error) => {
-            response.status(500).json({ error: error });
-        });
+        .tap((data) => responseWithData(response, data))
+        .catch((error) => responseWithServerError(response, error));
     // TODO:Close db connection
 });
 
@@ -47,32 +41,32 @@ app.get('/v1/sensor/history/humidity', function (request, response) {
     const limit = query.limit;
 
     storage.getHumidityHistory(filterBy, limit)
-        .tap((data) => {
-            response.send({
-                data: data
-            });
-        })
-        .catch((error) => {
-            response.status(500).json({ error: error });
-        });
+        .tap((data) => responseWithData(response, data))
+        .catch((error) => responseWithServerError(response, error));
 });
 
 app.put('/v1/sensor/:id', function (request, response) {
-    let id = request.params.id;
-    let body = request.body;
+    const id = request.params.id;
+    const body = request.body;
 
     storage.saveSensorData(id, body)
-        .tap((data) => {
-            console.log(data);
-            response.send({
-                data: data
-            });
-        })
-        .catch((error) => {
-            console.error(error);
-            response.status(500).json({ error: error });
-        });
+        .tap((data) => responseWithData(response, data))
+        .catch((error) => responseWithServerError(response, error));
 });
+
+function responseWithData(response, data: any) {
+    console.log(data);
+    response.json({
+        data: data
+    });
+}
+
+function responseWithServerError(response, error) {
+    console.error(error);
+    response.status(500).json({
+        error: error
+    });
+}
 
 app.listen(configuration.apiPort, function () {
     console.log('Service Running');
