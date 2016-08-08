@@ -1,3 +1,5 @@
+import bodyParser = require('body-parser');
+
 import * as express from 'express';
 import * as _ from 'lodash';
 import * as When from 'when';
@@ -18,6 +20,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'X-Requested-With');
     next();
 });
+app.use(bodyParser.json());
 
 app.get('/v1/gpio/:pinNumber', function (request, response) {
     const pinNumber = parseInt(request.params.pinNumber);
