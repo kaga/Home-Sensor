@@ -1,0 +1,9 @@
+version: '2'
+services:
+  testgpio:
+    build: .
+    container_name: testgpio
+    privileged: true
+    devices:
+      - "/dev/ttyAMA0:/dev/ttyAMA0"
+      - "/dev/mem:/dev/mem"

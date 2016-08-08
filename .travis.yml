@@ -8,6 +8,7 @@ notifications:
 env:
   - TEST_DIR=reporter
   - TEST_DIR=api
+  - TEST_DIR=rest-gpio
 install:
   - npm install -g typings
   - npm install -g typescript
