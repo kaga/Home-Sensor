@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { ScheduleController } from './scheduleController';
-import { Schedule } from './schedule/Schedule';
+import { Schedule } from './schedule/schedule';
 import { GpioController, GpioState } from './gpio/gpioController';
 import { Promise, resolve } from 'when';
 import * as sinon from 'sinon';
