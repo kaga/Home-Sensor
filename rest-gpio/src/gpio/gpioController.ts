@@ -20,6 +20,7 @@ export interface GpioConfiguration {
     activeLow?: boolean;
     description?: string;
     apiPathAlias?: string;
+    encodedSchedule?: number;
 }
 
 export function validateGpioConfigurations(configurations: GpioConfiguration[]): GpioConfiguration[] {

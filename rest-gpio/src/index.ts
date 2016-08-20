@@ -7,11 +7,21 @@ import * as When from 'when';
 import { PiGpioController } from './gpio/piGpioController';
 import { GpioController, GpioState } from './gpio/gpioController';
 
-import { loadConfiguration } from './configurationManager';
+import { loadConfiguration, saveGpioSchedule } from './configurationManager';
+import { Schedule } from './schedule/schedule';
+import { ScheduleController } from './scheduleController';
 
 const gpioConfigurations = loadConfiguration();
-const gpioControllers = _.map(gpioConfigurations, (config) => new PiGpioController(config));
-const gpioControllersLookup = _.keyBy(gpioControllers, (controller) => controller.bcmPinNumber);
+const gpioControllers = _.map(gpioConfigurations, (config) => {
+    const gpioController = new PiGpioController(config);
+    const encodedSchedule = config.encodedSchedule;
+    let schedule: Schedule;
+    if (encodedSchedule) {
+        schedule = new Schedule(encodedSchedule);
+    }     
+    return new ScheduleController(gpioController, schedule);
+});
+const gpioControllersLookup = _.keyBy(gpioControllers, (controllers) => controllers.getGpioController().bcmPinNumber);
 
 const app = express();
 
@@ -40,6 +50,24 @@ app.post('/v1/gpio', function (request, response) {
         .tap((state) => responseWithGpioState(state, response));
 });
 
+app.put('/v1/schedule', function(request, response) {
+    const body = request.body;
+
+    const bcmPinNumber = body['bcmPinNumber'];
+    const timeslots = body['timeslots'];
+
+    const schedule = new Schedule();            
+    schedule.setTimeslots(timeslots);
+            
+    findController(bcmPinNumber)
+        .tap((controller) => {
+            controller.updateSchedule(schedule)          
+            saveGpioSchedule(bcmPinNumber, schedule.toJSON());
+        })        
+        .then((controller) => controller.getGpioController().readPin())
+        .tap((state) => responseWithGpioState(state, response));  
+});
+
 app.listen(3000, function () {
     console.log('Service Running');
 });
@@ -55,9 +83,14 @@ function responseWithGpioState(state: GpioState, response) {
 }
 
 function findGpioController(pinNumber: number): When.Promise<GpioController> {
+    return findController(pinNumber)
+        .then((controller) => controller.getGpioController());
+}
+
+function findController(pinNumber: number): When.Promise<ScheduleController> {
     if (_.has(gpioControllersLookup, pinNumber)) {
         const controller = gpioControllersLookup[pinNumber];
         return When.resolve(controller);
     }
-    return When.reject<GpioController>('gpio controller for pin ' + pinNumber + ' not found');
+    return When.reject<ScheduleController>('gpio controller for pin ' + pinNumber + ' not found');
 }
