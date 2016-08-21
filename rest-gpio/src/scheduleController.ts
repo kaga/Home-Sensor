@@ -1,9 +1,9 @@
 import * as moment from 'moment';
 import { Schedule } from './schedule/schedule';
-import { GpioController, GpioState } from './gpio/gpioController';
+import { GpioController } from './gpio/gpioController';
 
 export class ScheduleController {
-    private schedule: Schedule
+    private schedule: Schedule;
     private timeoutReference: NodeJS.Timer;
     private gpioController: GpioController;
 
@@ -14,8 +14,8 @@ export class ScheduleController {
 
     updateSchedule(schedule: Schedule) {
         this.schedule = schedule;
-        this.updateRelayState();                
-    }    
+        this.updateRelayState();
+    }
 
     getGpioController() {
         return this.gpioController;
@@ -23,7 +23,7 @@ export class ScheduleController {
 
     private updateRelayState = () => {
         if (this.timeoutReference) {
-            clearTimeout(this.timeoutReference);        
+            clearTimeout(this.timeoutReference);
         }
 
         const relayNewState = this.schedule.isWithinTimeslot(new Date());
@@ -33,6 +33,6 @@ export class ScheduleController {
     }
 
     private nextTimeoutInMs() {
-        return moment().startOf('hour').add(1, 'hours').valueOf() - moment().valueOf()
+        return moment().startOf('hour').add(1, 'hours').valueOf() - moment().valueOf();
     }
 }

@@ -18,7 +18,7 @@ const gpioControllers = _.map(gpioConfigurations, (config) => {
     let schedule: Schedule;
     if (encodedSchedule) {
         schedule = new Schedule(encodedSchedule);
-    }     
+    }
     return new ScheduleController(gpioController, schedule);
 });
 const gpioControllersLookup = _.keyBy(gpioControllers, (controllers) => controllers.getGpioController().bcmPinNumber);
@@ -50,22 +50,22 @@ app.post('/v1/gpio', function (request, response) {
         .tap((state) => responseWithGpioState(state, response));
 });
 
-app.put('/v1/schedule', function(request, response) {
+app.put('/v1/schedule', function (request, response) {
     const body = request.body;
 
     const bcmPinNumber = body['bcmPinNumber'];
     const timeslots = body['timeslots'];
 
-    const schedule = new Schedule();            
+    const schedule = new Schedule();
     schedule.setTimeslots(timeslots);
-            
+
     findController(bcmPinNumber)
         .tap((controller) => {
-            controller.updateSchedule(schedule)          
+            controller.updateSchedule(schedule);
             saveGpioSchedule(bcmPinNumber, schedule.toJSON());
-        })        
+        })
         .then((controller) => controller.getGpioController().readPin())
-        .tap((state) => responseWithGpioState(state, response));  
+        .tap((state) => responseWithGpioState(state, response));
 });
 
 app.listen(3000, function () {

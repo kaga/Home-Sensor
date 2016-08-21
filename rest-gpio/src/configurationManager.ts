@@ -15,18 +15,18 @@ export function loadConfiguration() {
     return validateGpioConfigurations(gpioConfigs);
 }
 
-export function saveGpioSchedule(bcmPinNumber:number, encodedSchedule: number) {
+export function saveGpioSchedule(bcmPinNumber: number, encodedSchedule: number) {
     nconf.file({
         file: fileName
     });
 
-    const key = 'gpio:'+ bcmPinNumber +':timeslot';
+    const key = 'gpio:' + bcmPinNumber + ':timeslot';
     nconf.set(key, encodedSchedule);
-    nconf.save(function(error) {
+    nconf.save(function (error) {
         if (error) {
             console.error('error:' + error);
         } else {
             console.log('saved schedule ' + key + ', value: ' + encodedSchedule);
-        }        
+        }
     });
 }
