@@ -25,7 +25,8 @@ export class PiGpioController implements GpioController {
             timestamp: new Date(),
             bcmPinNumber: this.bcmPinNumber,
             state: state
-        });
+        })
+            .tap((state) => console.log(JSON.stringify(state, null, 4)));
     }
 
     writeToPin(newState: boolean): When.Promise<GpioState> {
