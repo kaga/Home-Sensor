@@ -8,11 +8,16 @@ export function loadConfiguration() {
         file: fileName
     });
 
-    const gpioConfigs = nconf.get('gpio');
-    console.log('reading gpio configs');
+    const gpioConfigs = nconf.get('gpio');  
+    const mockGpio = nconf.get('mock_gpio');
+
+    console.log('reading gpio configs, useMock:' + mockGpio);
     console.log(JSON.stringify(gpioConfigs, null, 4));
 
-    return validateGpioConfigurations(gpioConfigs);
+    return {
+        useMock: mockGpio,
+        configs: validateGpioConfigurations(gpioConfigs)   
+    }
 }
 
 export function saveGpioSchedule(bcmPinNumber: number, encodedSchedule: number) {
@@ -20,7 +25,7 @@ export function saveGpioSchedule(bcmPinNumber: number, encodedSchedule: number) 
         file: fileName
     });
 
-    const key = 'gpio:' + bcmPinNumber + ':timeslot';
+    const key = 'gpio:' + bcmPinNumber + ':encodedSchedule';
     nconf.set(key, encodedSchedule);
     nconf.save(function (error) {
         if (error) {

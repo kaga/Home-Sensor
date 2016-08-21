@@ -2,26 +2,9 @@ import { assert } from 'chai';
 import { ScheduleController } from './scheduleController';
 import { Schedule } from './schedule/schedule';
 import { GpioController, GpioState } from './gpio/gpioController';
+import { MockGpioController } from './gpio/mockGpioController';
 import { Promise, resolve } from 'when';
 import * as sinon from 'sinon';
-
-class MockGpioController implements GpioController {
-    bcmPinNumber: number = 0;
-    state: boolean = false;
-
-    readPin(): Promise<GpioState> {
-        return resolve({
-            timestamp: new Date(),
-            bcmPinNumber: this.bcmPinNumber,
-            state: this.state
-        });
-    }
-
-    writeToPin(newState: boolean): Promise<GpioState> {
-        this.state = newState;
-        return this.readPin();
-    }
-}
 
 describe('Schedule Controller manages gpio by 24 hour time schedule', function () {
 

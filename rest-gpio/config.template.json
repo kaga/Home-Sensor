@@ -1,4 +1,5 @@
 {
+    "mock_gpio": true,
     "gpio": {
         "4": {
             "bcmPinNumber": 4,

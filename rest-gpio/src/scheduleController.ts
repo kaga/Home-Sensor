@@ -7,9 +7,11 @@ export class ScheduleController {
     private timeoutReference: NodeJS.Timer;
     private gpioController: GpioController;
 
-    constructor(gpioController: GpioController, schedule: Schedule = new Schedule()) {
+    constructor(gpioController: GpioController, schedule?: Schedule) {
         this.gpioController = gpioController;
-        this.updateSchedule(schedule);
+        if (schedule) {
+            this.updateSchedule(schedule);
+        }        
     }
 
     updateSchedule(schedule: Schedule) {
