@@ -4,6 +4,7 @@ services:
     image: homesensor/gpio
     container_name: homesensor-gpio
     privileged: true
+    restart: always
     devices:
       - "/dev/ttyAMA0:/dev/ttyAMA0"
       - "/dev/mem:/dev/mem"
@@ -11,3 +12,4 @@ services:
       - "3001:3000"
     volumes:
       - ~/Documents/Home-Sensor/config/gpio_config.json:/usr/src/app/config.json
+      - /etc/localtime:/etc/localtime

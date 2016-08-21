@@ -1,25 +1,25 @@
 {
-    "gpio": {
-        "4": {
-            "bcmPinNumber": 4,
-            "state": true,
-            "activeLow": false,
-            "description": "The pin that switch the relay module on/off"
-        },
-        "17": {
-            "bcmPinNumber": 17,
-            "state": false,
-            "activeLow": true,
-            "description": "The control pin for IN2, 0 = off 1 = on",
-            "apiPathAlias": "/in2"
-        },
-        "18": {
-            "bcmPinNumber": 18,
-            "state": false,
-            "activeLow": true,
-            "description": "The control pin for IN1, 0 = off 1 = on",
-            "apiPathAlias": "/in1",
-            "encodedSchedule": 14713075
-        }
+  "gpio": {
+    "4": {
+      "bcmPinNumber": 4,
+      "state": true,
+      "activeLow": false,
+      "description": "The pin that switch the relay module on/off"
+    },
+    "17": {
+      "bcmPinNumber": 17,
+      "state": false,
+      "activeLow": true,
+      "description": "The control pin for IN2, 0 = off 1 = on",
+      "apiPathAlias": "/in2"
+    },
+    "18": {
+      "bcmPinNumber": 18,
+      "state": false,
+      "activeLow": true,
+      "description": "The control pin for IN1, 0 = off 1 = on",
+      "apiPathAlias": "/in1",
+      "encodedSchedule": 0
     }
+  }
 }
