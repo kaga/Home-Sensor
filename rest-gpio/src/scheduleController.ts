@@ -11,7 +11,7 @@ export class ScheduleController {
         this.gpioController = gpioController;
         if (schedule) {
             this.updateSchedule(schedule);
-        }        
+        }
     }
 
     updateSchedule(schedule: Schedule) {

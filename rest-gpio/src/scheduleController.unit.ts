@@ -1,9 +1,7 @@
 import { assert } from 'chai';
 import { ScheduleController } from './scheduleController';
 import { Schedule } from './schedule/schedule';
-import { GpioController, GpioState } from './gpio/gpioController';
 import { MockGpioController } from './gpio/mockGpioController';
-import { Promise, resolve } from 'when';
 import * as sinon from 'sinon';
 
 describe('Schedule Controller manages gpio by 24 hour time schedule', function () {

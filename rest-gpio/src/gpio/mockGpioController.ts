@@ -9,10 +9,10 @@ export class MockGpioController implements GpioController {
         if (config) {
             this.bcmPinNumber = config.bcmPinNumber;
             this.writeToPin(config.state);
-        }        
+        }
     }
 
-    readPin(): Promise<GpioState> {        
+    readPin(): Promise<GpioState> {
         return resolve({
             timestamp: new Date(),
             bcmPinNumber: this.bcmPinNumber,

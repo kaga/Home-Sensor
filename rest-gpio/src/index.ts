@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as When from 'when';
 
 import { PiGpioController } from './gpio/piGpioController';
-import { MockGpioController } from './gpio/mockGpioController';
+// import { MockGpioController } from './gpio/mockGpioController';
 import { GpioController, GpioState } from './gpio/gpioController';
 
 import { loadConfiguration, saveGpioSchedule } from './configurationManager';
@@ -15,7 +15,7 @@ import { ScheduleController } from './scheduleController';
 const gpioConfigurations = loadConfiguration();
 const gpioControllers = _.map(gpioConfigurations.configs, (config) => {
     const gpioController = new PiGpioController(config);
-    //const gpioController = new MockGpioController(config);
+    // const gpioController = new MockGpioController(config);
     const encodedSchedule = config.encodedSchedule;
     let schedule: Schedule;
     if (encodedSchedule) {
@@ -66,7 +66,7 @@ app.put('/v1/schedule', function (request, response) {
             controller.updateSchedule(schedule);
             saveGpioSchedule(bcmPinNumber, schedule.toJSON());
             return controller.getGpioController().readPin();
-        })        
+        })
         .tap((state) => responseWithGpioState(state, response));
 });
 

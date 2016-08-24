@@ -8,7 +8,7 @@ export function loadConfiguration() {
         file: fileName
     });
 
-    const gpioConfigs = nconf.get('gpio');  
+    const gpioConfigs = nconf.get('gpio');
     const mockGpio = nconf.get('mock_gpio');
 
     console.log('reading gpio configs, useMock:' + mockGpio);
@@ -16,8 +16,8 @@ export function loadConfiguration() {
 
     return {
         useMock: mockGpio,
-        configs: validateGpioConfigurations(gpioConfigs)   
-    }
+        configs: validateGpioConfigurations(gpioConfigs)
+    };
 }
 
 export function saveGpioSchedule(bcmPinNumber: number, encodedSchedule: number) {
