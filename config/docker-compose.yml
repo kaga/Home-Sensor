@@ -1,6 +1,6 @@
 version: '2'
 services:
-  rest-gpio:
+  homesensor-gpio:
     image: homesensor/gpio
     container_name: homesensor-gpio
     privileged: true
@@ -11,5 +11,33 @@ services:
     ports: 
       - "3001:3000"
     volumes:
-      - ~/Documents/Home-Sensor/config/gpio_config.json:/usr/src/app/config.json
+      - ./docker_config.json:/usr/src/app/config.json
       - /etc/localtime:/etc/localtime
+  homesensor-html:
+    image: homesensor/html
+    container_name: homesensor-html
+    restart: always
+    ports:
+      - "80:80"
+  homesensor-reporter:
+    image: homesensor/reporter
+    container_name: homesensor-reporter
+    devices: 
+      - "/dev/ttyAMA0:/dev/ttyAMA0"
+      - "/dev/mem:/dev/mem"
+    privileged: true
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - homesensor-api
+    volumes:
+      - ./docker_config.json:/usr/src/app/config.json
+  homesensor-api:
+    image: homesensor/api
+    container_name: homesensor-api
+    ports:
+      - "3000:3000"
+    network_mode: "host"    
+    restart: always
+    volumes:
+      - ./docker_config.json:/usr/src/app/config.json

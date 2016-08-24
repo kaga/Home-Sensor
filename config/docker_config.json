@@ -1,0 +1,37 @@
+{
+    "gpio": {
+        "4": {
+            "bcmPinNumber": 4,
+            "state": true,
+            "activeLow": false,
+            "description": "The pin that switch the relay module on/off"
+        },
+        "17": {
+            "bcmPinNumber": 17,
+            "state": false,
+            "activeLow": true,
+            "description": "The control pin for IN2, 0 = off 1 = on",
+            "apiPathAlias": "/in2"
+        },
+        "18": {
+            "bcmPinNumber": 18,
+            "state": false,
+            "activeLow": true,
+            "description": "The control pin for IN1, 0 = off 1 = on",
+            "apiPathAlias": "/in1",
+            "encodedSchedule": 0
+        }
+    },
+    "report_api": true,
+    "report_api_host": "http://localhost:3000",
+    "report_api_path": "/v1/sensor",
+    "report_interval_seconds": 60,
+    "sensor_source": "htu21d",
+    "tag": "kagaroom",
+    "couchdb_host": "http://localhost:5984",
+    "couchdb_database_name": "kagaroom",
+    "couchdb_design_name": "sensor",
+    "couchdb_temperature_view_name": "temperature",
+    "couchdb_humidity_view_name": "humidity",
+    "api_port": 3000
+}
