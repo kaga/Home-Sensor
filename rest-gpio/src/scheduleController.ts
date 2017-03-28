@@ -7,7 +7,7 @@ export class ScheduleController {
     private timeoutReference: NodeJS.Timer;
     private gpioController: GpioController;
 
-    constructor(gpioController: GpioController, schedule?: Schedule) {
+    constructor(gpioController: GpioController, schedule: Schedule) {
         this.gpioController = gpioController;
         if (schedule) {
             this.updateSchedule(schedule);
@@ -17,6 +17,10 @@ export class ScheduleController {
     updateSchedule(schedule: Schedule) {
         this.schedule = schedule;
         this.updateRelayState();
+    }
+
+    getSchedule() {
+        return this.schedule;
     }
 
     getGpioController() {
@@ -35,6 +39,6 @@ export class ScheduleController {
     }
 
     private nextTimeoutInMs() {
-        return moment().startOf('hour').add(1, 'hours').valueOf() - moment().valueOf();
+        return moment().endOf('minute').add(1, 'second').valueOf() - moment().valueOf();
     }
 }

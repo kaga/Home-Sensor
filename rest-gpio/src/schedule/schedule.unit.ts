@@ -70,4 +70,18 @@ describe('schedule keeping', function () {
         singleHourSchedule.includeHour(0);
         assert.equal(singleHourSchedule.toJSON(), 8388609);
     });
+
+    it('should return the schedule as saved after toJSON', function () {
+        const schedule = new Schedule();
+        schedule.setTimeslots([false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+
+        schedule.toJSON();
+        _.each(schedule.timeslots, (value, key) => {
+            if (key === 3) {
+                assert.isTrue(value);
+            } else {
+                assert.isFalse(value);
+            }
+        });
+    });
 });

@@ -49,7 +49,7 @@ export class Schedule {
     }
 
     toJSON(): number {
-        const encodedBinary = _.map(this.timeslots.reverse(), (value) => value ? '1' : '0').join('');
+        const encodedBinary = _.map(_.clone(this.timeslots).reverse(), (value) => value ? '1' : '0').join('');
         return parseInt(encodedBinary, 2);
     }
 

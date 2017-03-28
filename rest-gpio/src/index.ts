@@ -38,7 +38,10 @@ app.get('/v1/gpio/:pinNumber', function (request, response) {
     const pinNumber = parseInt(request.params.pinNumber);
     findGpioController(pinNumber)
         .then((controller) => controller.readPin())
-        .tap((state) => responseWithGpioState(state, response));
+        .tap((state) => {
+            findController(pinNumber)
+                .then((scheduleController) => responseWithGpioState(scheduleController, state, response));
+        });
 });
 
 app.post('/v1/gpio', function (request, response) {
@@ -49,7 +52,10 @@ app.post('/v1/gpio', function (request, response) {
 
     findGpioController(bcmPinNumber)
         .then((controller) => controller.writeToPin(newState))
-        .tap((state) => responseWithGpioState(state, response));
+        .tap((state) => {
+            findController(bcmPinNumber)
+                .then((scheduleController) => responseWithGpioState(scheduleController, state, response));
+        });
 });
 
 app.put('/v1/schedule', function (request, response) {
@@ -65,21 +71,22 @@ app.put('/v1/schedule', function (request, response) {
         .then((controller) => {
             controller.updateSchedule(schedule);
             saveGpioSchedule(bcmPinNumber, schedule.toJSON());
-            return controller.getGpioController().readPin();
-        })
-        .tap((state) => responseWithGpioState(state, response));
+            return controller.getGpioController().readPin()
+                .tap((state) => responseWithGpioState(controller, state, response));
+        });
 });
 
 app.listen(3000, function () {
     console.log('Service Running');
 });
 
-function responseWithGpioState(state: GpioState, response) {
+function responseWithGpioState(controller: ScheduleController, state: GpioState, response) {
     response.send({
         data: {
             timestamp: state.timestamp.toISOString,
             state: state.state,
-            bcmPinNumber: state.bcmPinNumber
+            bcmPinNumber: state.bcmPinNumber,
+            schedule: controller.getSchedule().timeslots
         }
     });
 }
