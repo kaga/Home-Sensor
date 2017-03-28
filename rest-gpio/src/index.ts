@@ -17,10 +17,7 @@ const gpioControllers = _.map(gpioConfigurations.configs, (config) => {
     const gpioController = new PiGpioController(config);
     // const gpioController = new MockGpioController(config);
     const encodedSchedule = config.encodedSchedule;
-    let schedule: Schedule;
-    if (encodedSchedule) {
-        schedule = new Schedule(encodedSchedule);
-    }
+    let schedule = encodedSchedule ? new Schedule(encodedSchedule) : new Schedule();
     return new ScheduleController(gpioController, schedule);
 });
 const gpioControllersLookup = _.keyBy(gpioControllers, (controllers) => controllers.getGpioController().bcmPinNumber);
@@ -38,8 +35,8 @@ app.get('/v1/gpio/:pinNumber', function (request, response) {
     const pinNumber = parseInt(request.params.pinNumber);
     findGpioController(pinNumber)
         .then((controller) => controller.readPin())
-        .tap((state) => {
-            findController(pinNumber)
+        .then((state) => {
+            return findController(pinNumber)
                 .then((scheduleController) => responseWithGpioState(scheduleController, state, response));
         });
 });
@@ -52,8 +49,8 @@ app.post('/v1/gpio', function (request, response) {
 
     findGpioController(bcmPinNumber)
         .then((controller) => controller.writeToPin(newState))
-        .tap((state) => {
-            findController(bcmPinNumber)
+        .then((state) => {
+            return findController(bcmPinNumber)
                 .then((scheduleController) => responseWithGpioState(scheduleController, state, response));
         });
 });
@@ -72,7 +69,7 @@ app.put('/v1/schedule', function (request, response) {
             controller.updateSchedule(schedule);
             saveGpioSchedule(bcmPinNumber, schedule.toJSON());
             return controller.getGpioController().readPin()
-                .tap((state) => responseWithGpioState(controller, state, response));
+                .then((state) => responseWithGpioState(controller, state, response));
         });
 });
 

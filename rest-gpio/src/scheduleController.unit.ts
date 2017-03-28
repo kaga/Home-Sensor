@@ -24,7 +24,7 @@ describe('Schedule Controller manages gpio by 24 hour time schedule', function (
 
             assert.isTrue(gpioController.state, `should set state to true between 10:00 ~ 10:59:59, current time: ${moment(clock.now).format('LLL')}`);
         });
-        clock.tick(1000);
+        clock.tick(2000); //Give extra 1 second room for error
         assert.isFalse(gpioController.state, `just out of 10am timeslot, current time: ${moment(clock.now).format('LLL')}`);
         clock.restore();
     });
